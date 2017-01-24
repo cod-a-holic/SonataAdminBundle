@@ -107,7 +107,13 @@ class HelperController
 
         // render the widget
         $renderer = $this->getFormRenderer();
-        $renderer->setTheme($view, $admin->getFormTheme());
+        /*$renderer->setTheme($view, $admin->getFormTheme());*/
+
+        if ($this->has('twig.form.renderer')) {
+            $this->get('twig.form.renderer')->setTheme($view, $admin->getFormTheme());
+        } else {
+            $extension->renderer->setTheme($view, $admin->getFormTheme());
+       }
 
         return new Response($renderer->searchAndRenderBlock($view, 'widget'));
     }
@@ -153,7 +159,12 @@ class HelperController
 
         // render the widget
         $renderer = $this->getFormRenderer();
-        $renderer->setTheme($view, $admin->getFormTheme());
+        /*$renderer->setTheme($view, $admin->getFormTheme());*/
+        if ($this->has('twig.form.renderer')) {
+            $this->get('twig.form.renderer')->setTheme($view, $admin->getFormTheme());
+        } else {
+            $extension->renderer->setTheme($view, $admin->getFormTheme());
+        }
 
         return new Response($renderer->searchAndRenderBlock($view, 'widget'));
     }

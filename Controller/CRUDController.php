@@ -104,7 +104,14 @@ class CRUDController extends Controller
         $formView = $datagrid->getForm()->createView();
 
         // set the theme for the current Admin Form
-        $this->setFormTheme($formView, $this->admin->getFilterTheme());
+/*        $this->setFormTheme($formView, $this->admin->getFilterTheme());*/
+
+        if ($this->has('twig.form.renderer')) {
+            $this->get('twig.form.renderer')->setTheme($formView, $this->admin->getFilterTheme());
+        } else {
+            $this->get('twig')->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->renderer->setTheme($formView, $this->admin->getFilterTheme());
+       }
+
 
         return $this->render($this->admin->getTemplate('list'), array(
             'action' => 'list',
@@ -319,7 +326,12 @@ class CRUDController extends Controller
 
         $formView = $form->createView();
         // set the theme for the current Admin Form
-        $this->setFormTheme($formView, $this->admin->getFormTheme());
+        /*$this->setFormTheme($formView, $this->admin->getFormTheme());*/
+        if ($this->has('twig.form.renderer')) {
+            $this->get('twig.form.renderer')->setTheme($view, $this->admin->getFilterTheme());
+        } else {
+            $this->get('twig')->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->renderer->setTheme($view, $this->admin->getFilterTheme());
+       }
 
         return $this->render($this->admin->getTemplate($templateKey), array(
             'action' => 'edit',
@@ -558,6 +570,12 @@ class CRUDController extends Controller
         $formView = $form->createView();
         // set the theme for the current Admin Form
         $this->setFormTheme($formView, $this->admin->getFormTheme());
+        if ($this->has('twig.form.renderer')) {
+            $this->get('twig.form.renderer')->setTheme($view, $this->admin->getFilterTheme());
+        } else {
+
+            $this->get('twig')->getExtension('Symfony\Bridge\Twig\Extension\FormExtension')->renderer->setTheme($view, $this->admin->getFilterTheme());
+       }
 
         return $this->render($this->admin->getTemplate($templateKey), array(
             'action' => 'create',
